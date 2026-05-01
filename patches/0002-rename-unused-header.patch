@@ -1,8 +1,0 @@
- include/linux/{wireless.h => old_unused_wireless.h} | 0
- 1 file changed
- rename include/linux/{wireless.h => old_unused_wireless.h} (100%)
-
-diff --git a/include/linux/wireless.h b/include/linux/old_unused_wireless.h
-similarity index 100%
-rename from include/linux/wireless.h
-rename to include/linux/old_unused_wireless.h
