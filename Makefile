@@ -13,6 +13,8 @@ PKG_SOURCE_VERSION:=825556e195ecde9ce8f5f4cbad9953f398c8598e
 PKG_MAINTAINER:=Rin Cat <dev@rincat.ch>
 PKG_BUILD_PARALLEL:=1
 
+STAMP_CONFIGURED_DEPENDS := $(STAGING_DIR)/usr/include/mac80211-backport/backport/autoconf.h
+
 include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/package.mk
 
@@ -33,7 +35,9 @@ NOSTDINC_FLAGS := \
 	-I$(STAGING_DIR)/usr/include/mac80211-backport/uapi \
 	-I$(STAGING_DIR)/usr/include/mac80211 \
 	-I$(STAGING_DIR)/usr/include/mac80211/uapi \
-	-include backport/backport.h
+        -include backport/autoconf.h \
+        -include backport/backport.h \
+        -Wno-error=cast-function-type
 
 define KernelPackage/rtl88x2bu-cl/config
 $(shell \
@@ -68,7 +72,7 @@ define Build/Clean
 	$(call Build/Clean/Default)
 endef
 
-NOSTDINC_FLAGS+=-DCONFIG_IOCTL_CFG80211 -DRTW_USE_CFG80211_STA_EVENT -DBUILD_OPENWRT
+NOSTDINC_FLAGS+=-DCONFIG_IOCTL_CFG80211 -DRTW_USE_CFG80211_STA_EVENT -DRTW_SINGLE_WIPHY -DCONFIG_CONCURRENT_MODE -DBUILD_OPENWRT
 
 define Build/Compile
 	+$(KERNEL_MAKE) $(PKG_JOBS) \
